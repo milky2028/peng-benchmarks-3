@@ -14,6 +14,8 @@ int main() {
 //        std::cout << file.path() << std::endl;
 //    }
     
+//    png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    
     png_image image {.version = PNG_IMAGE_VERSION, .opaque = NULL};
     auto one_image_path = fs::path(images_directory).concat(one_image);
     
