@@ -256,8 +256,12 @@
 		95D8E5692B0307ED0098BFD6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = "/opt/homebrew/Cellar/libpng/1.6.40/include/**";
+				HEADER_SEARCH_PATHS = (
+					"/opt/homebrew/Cellar/libpng/1.6.40/include/**",
+					/opt/homebrew/Cellar/libpng/1.6.40/include,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"/opt/homebrew/Cellar/libpng/1.6.40/lib/**",
 					/opt/homebrew/Cellar/libpng/1.6.40/lib,
@@ -269,12 +273,18 @@
 		95D8E56A2B0307ED0098BFD6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = "/opt/homebrew/Cellar/libpng/1.6.40/include/**";
+				GCC_OPTIMIZATION_LEVEL = fast;
+				HEADER_SEARCH_PATHS = (
+					"/opt/homebrew/Cellar/libpng/1.6.40/include/**",
+					/opt/homebrew/Cellar/libpng/1.6.40/include,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"/opt/homebrew/Cellar/libpng/1.6.40/lib/**",
 					/opt/homebrew/Cellar/libpng/1.6.40/lib,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
