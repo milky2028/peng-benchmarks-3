@@ -2,7 +2,7 @@ import { readdir, stat } from "fs/promises";
 import { execSync } from "child_process";
 
 const CRANK_UP_OXI_PNG_COMPRESSION = false
-const oxi_compression = CRANK_UP_OXI_PNG_COMPRESSION ? '-o max' : ''
+const oxi_compression = CRANK_UP_OXI_PNG_COMPRESSION ? '-o max' : '-o 0'
 
 const images_directory = new URL(
   "/Users/tgross/Downloads/test-images",
