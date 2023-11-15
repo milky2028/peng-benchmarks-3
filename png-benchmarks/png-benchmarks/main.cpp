@@ -36,11 +36,10 @@ namespace fs = std::filesystem;
 const fs::path destination_directory = fs::path("/Users/tgross/Documents/GitHub/peng-benchmarks-3/png-benchmarks/images");
 const fs::path images_directory = fs::path("/Users/tgross/Downloads/test-images");
 
-const std::string an_image = "/54585431-ad20-4b61-bcc2-ab9ad9e23650.png";
-
 int main(int argc, const char* argv[]) {
-    auto input_file_path = fs::path(images_directory).concat(an_image);
-    
+    auto image_path = argv[1];
+    auto input_file_path = fs::path(images_directory).concat("/").concat(image_path);
+
     auto read_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     auto input_file = fopen(input_file_path.c_str(), "rb+");
     png_init_io(read_ptr, input_file);
@@ -48,11 +47,10 @@ int main(int argc, const char* argv[]) {
     auto input_info_ptr = png_create_info_struct(read_ptr);
     png_read_png(read_ptr, input_info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
 
-    auto output_path = fs::path(destination_directory).concat(an_image);
+    auto output_path = fs::path(destination_directory).concat("/").concat(image_path);
     auto write_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     
-    auto output_file_path = fs::path(destination_directory).concat(an_image);
-    auto output_file = fopen(output_file_path.c_str(), "wb+");
+    auto output_file = fopen(output_path.c_str(), "wb+");
     png_init_io(write_ptr, output_file);
     
     png_set_compression_buffer_size(write_ptr, 20 * 1024 * 1024); // 20MB compression buffer
@@ -71,4 +69,5 @@ int main(int argc, const char* argv[]) {
     png_set_text_compression_method(write_ptr, 8);
     
     png_write_png(write_ptr, input_info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+    printf("Compression of %s complete.", image_path);
 }
