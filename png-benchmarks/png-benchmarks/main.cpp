@@ -1,10 +1,5 @@
-#include <iostream>
 #include <png.h>
 #include <filesystem>
-#include <fstream>
-#include <string>
-#include <chrono>
-#include <functional>
 
 //png_image image {.version = PNG_IMAGE_VERSION, .opaque = NULL};
 
