@@ -1,6 +1,9 @@
 import { readdir, stat } from "fs/promises";
 import { execSync } from "child_process";
 
+const CRANK_UP_OXI_PNG_COMPRESSION = false
+const oxi_compression = CRANK_UP_OXI_PNG_COMPRESSION ? '-o max' : ''
+
 const images_directory = new URL(
   "/Users/tgross/Downloads/test-images",
   import.meta.url
@@ -54,7 +57,7 @@ for (const image_path of images) {
 
   const oxi_start = performance.now();
   execSync(
-    `oxipng ${full_in_path.pathname} --out ${full_oxi_out_path.pathname}`
+    `oxipng ${oxi_compression} ${full_in_path.pathname} --out ${full_oxi_out_path.pathname}`
   );
   const oxi_end = performance.now();
 
