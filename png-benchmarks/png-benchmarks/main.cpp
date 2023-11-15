@@ -41,7 +41,7 @@ int main(int argc, const char* argv[]) {
     auto input_file_path = fs::path(images_directory).concat("/").concat(image_path);
 
     auto read_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    auto input_file = fopen(input_file_path.c_str(), "rb+");
+    auto input_file = fopen(input_file_path.c_str(), "rb");
     png_init_io(read_ptr, input_file);
     
     auto input_info_ptr = png_create_info_struct(read_ptr);
@@ -50,7 +50,7 @@ int main(int argc, const char* argv[]) {
     auto output_path = fs::path(destination_directory).concat("/").concat(image_path);
     auto write_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     
-    auto output_file = fopen(output_path.c_str(), "wb+");
+    auto output_file = fopen(output_path.c_str(), "wb");
     png_init_io(write_ptr, output_file);
     
     png_set_compression_buffer_size(write_ptr, 20 * 1024 * 1024); // 20MB compression buffer
