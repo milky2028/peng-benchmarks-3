@@ -26,6 +26,8 @@
 //    auto end = std::chrono::high_resolution_clock::now();
 //}
 
+const bool MAX_COMPRESSION = false;
+
 namespace fs = std::filesystem;
 
 const fs::path destination_directory = fs::path("/Users/tgross/Documents/GitHub/peng-benchmarks-3/png-benchmarks/images");
@@ -48,20 +50,22 @@ int main(int argc, const char* argv[]) {
     auto output_file = fopen(output_path.c_str(), "wb");
     png_init_io(write_ptr, output_file);
     
-    png_set_compression_buffer_size(write_ptr, 20 * 1024 * 1024); // 20MB compression buffer
-    png_set_filter(write_ptr, 0, PNG_ALL_FILTERS);
-    
-    png_set_compression_level(write_ptr, 9);
-    png_set_compression_mem_level(write_ptr, 9);
-    png_set_compression_strategy(write_ptr, 1);
-    png_set_compression_window_bits(write_ptr, 15);
-    png_set_compression_method(write_ptr, 8);
+    if (MAX_COMPRESSION) {
+        png_set_compression_buffer_size(write_ptr, 1024 * 1024); // 1MB compression buffer
+        png_set_filter(write_ptr, 0, PNG_ALL_FILTERS);
+        
+        png_set_compression_level(write_ptr, 9);
+        png_set_compression_mem_level(write_ptr, 9);
+        png_set_compression_strategy(write_ptr, 1);
+        png_set_compression_window_bits(write_ptr, 15);
+        png_set_compression_method(write_ptr, 8);
 
-    png_set_text_compression_level(write_ptr, 9);
-    png_set_text_compression_mem_level(write_ptr, 9);
-    png_set_text_compression_strategy(write_ptr, 1);
-    png_set_text_compression_window_bits(write_ptr, 15);
-    png_set_text_compression_method(write_ptr, 8);
+        png_set_text_compression_level(write_ptr, 9);
+        png_set_text_compression_mem_level(write_ptr, 9);
+        png_set_text_compression_strategy(write_ptr, 1);
+        png_set_text_compression_window_bits(write_ptr, 15);
+        png_set_text_compression_method(write_ptr, 8);
+    }
     
     png_write_png(write_ptr, input_info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
     printf("Compression of %s complete.", image_path);
