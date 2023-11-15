@@ -34,21 +34,21 @@ for (const image_path of pngs) {
   execSync(`${executable_location.pathname} ${image_path}`);
   const end = performance.now();
 
-  const libpng_time_ms = end - start;
-  times[image_path].libpng_time_ms = libpng_time_ms;
+  const libpng_compression_time_ms = end - start;
+  times[image_path].libpng_compression_time_ms = libpng_compression_time_ms;
 
   const full_libpng_out_path = new URL(
     image_path,
     `${libpng_destination_directory}/`
   );
   const libpng_stats = await stat(full_libpng_out_path);
-  const libpng_size_kb = libpng_stats.size / 1000;
+  const libpng_compressed_size_kb = libpng_stats.size / 1000;
 
-  times[image_path].libpng_size_kb = libpng_size_kb;
-  const libpng_change_percentage = Math.abs(
-    (libpng_size_kb / original_size_kb) * 100 - 100
+  times[image_path].libpng_compressed_size_kb = libpng_compressed_size_kb;
+  const libpng_percent_change = Math.abs(
+    (libpng_compressed_size_kb / original_size_kb) * 100 - 100
   );
-  times[image_path].libpng_change_percentage = libpng_change_percentage;
+  times[image_path].libpng_percent_change = libpng_percent_change;
 
   console.log(`Compressing ${image_path} with oxipng...`);
   const full_oxi_out_path = new URL(
@@ -63,28 +63,28 @@ for (const image_path of pngs) {
   const oxi_end = performance.now();
 
   const oxi_stats = await stat(full_oxi_out_path);
-  const oxipng_time_ms = oxi_end - oxi_start;
-  times[image_path].oxipng_time_ms = oxipng_time_ms;
+  const oxipng_compression_time_ms = oxi_end - oxi_start;
+  times[image_path].oxipng_compression_time_ms = oxipng_compression_time_ms;
 
-  const oxipng_size_kb = oxi_stats.size / 1000;
-  times[image_path].oxipng_size_kb = oxipng_size_kb;
+  const oxipng_compressed_size_kb = oxi_stats.size / 1000;
+  times[image_path].oxipng_compressed_size_kb = oxipng_compressed_size_kb;
 
-  const oxipng_change_percentage = Math.abs(
-    (oxipng_size_kb / original_size_kb) * 100 - 100
+  const oxipng_percent_change = Math.abs(
+    (oxipng_compressed_size_kb / original_size_kb) * 100 - 100
   );
-  times[image_path].oxipng_change_percentage = oxipng_change_percentage;
+  times[image_path].oxipng_percent_change = oxipng_percent_change;
 
   const faster_compressor =
-    oxipng_time_ms < libpng_time_ms ? "oxipng" : "libpng";
+    oxipng_compression_time_ms < libpng_compression_time_ms ? "oxipng" : "libpng";
 
   const smaller_file =
-    oxipng_change_percentage > libpng_change_percentage ? "oxipng" : "libpng";
+    oxipng_percent_change > libpng_percent_change ? "oxipng" : "libpng";
   times[
     image_path
   ].conclusion = `${faster_compressor} compresses the file faster by ${Math.round(
-    Math.abs(oxipng_time_ms - libpng_time_ms)
+    Math.abs(oxipng_compression_time_ms - libpng_compression_time_ms)
   )}ms <===> ${smaller_file} generates a smaller file by ${Math.round(
-    Math.abs(oxipng_change_percentage - libpng_change_percentage)
+    Math.abs(oxipng_percent_change - libpng_percent_change)
   )}%`;
 }
 
