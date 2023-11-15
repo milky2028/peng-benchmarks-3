@@ -19,9 +19,10 @@ const executable_location = new URL(
 );
 
 const images = await readdir(images_directory);
+const pngs = images.filter((image) => image.endsWith('.png'))
 const times = {};
 
-for (const image_path of images) {
+for (const image_path of pngs) {
   const full_in_path = new URL(image_path, `${images_directory}/`);
   const stats = await stat(full_in_path);
 
