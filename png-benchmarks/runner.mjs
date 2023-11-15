@@ -1,8 +1,8 @@
 import { readdir, stat } from "fs/promises";
 import { execSync } from "child_process";
 
-const CRANK_UP_OXI_PNG_COMPRESSION = false
-const oxi_compression = CRANK_UP_OXI_PNG_COMPRESSION ? '-o max' : '-o 0'
+const CRANK_UP_OXI_PNG_COMPRESSION = false;
+const oxi_compression = CRANK_UP_OXI_PNG_COMPRESSION ? "-o max" : "-o 0";
 
 const images_directory = new URL(
   "/Users/tgross/Downloads/test-images",
@@ -19,7 +19,7 @@ const executable_location = new URL(
 );
 
 const images = await readdir(images_directory);
-const pngs = images.filter((image) => image.endsWith('.png'))
+const pngs = images.filter((image) => image.endsWith(".png"));
 const times = {};
 
 for (const image_path of pngs) {
@@ -75,7 +75,9 @@ for (const image_path of pngs) {
   times[image_path].oxipng_percent_change = oxipng_percent_change;
 
   const faster_compressor =
-    oxipng_compression_time_ms < libpng_compression_time_ms ? "oxipng" : "libpng";
+    oxipng_compression_time_ms < libpng_compression_time_ms
+      ? "oxipng"
+      : "libpng";
 
   const smaller_file =
     oxipng_percent_change > libpng_percent_change ? "oxipng" : "libpng";
