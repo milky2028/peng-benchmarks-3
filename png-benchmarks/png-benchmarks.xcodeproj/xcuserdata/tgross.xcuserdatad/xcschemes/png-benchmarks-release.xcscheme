@@ -53,6 +53,10 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "0b143a68-b8c8-4fd3-af58-88f3d364a203.png"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "25eb5cd8-581e-4afc-bac9-b52a40d66189.png"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
