@@ -1,7 +1,7 @@
 import { readdir, stat } from "fs/promises";
 import { execSync } from "child_process";
 
-const CRANK_UP_OXI_PNG_COMPRESSION = false;
+const CRANK_UP_OXI_PNG_COMPRESSION = true;
 const oxi_compression = CRANK_UP_OXI_PNG_COMPRESSION ? "-o max" : "-o 0";
 
 const images_directory = new URL(
@@ -80,7 +80,7 @@ for (const image_path of pngs) {
       : "libpng";
 
   const smaller_file =
-    oxipng_percent_change > libpng_percent_change ? "oxipng" : "libpng";
+    oxipng_compressed_size_kb < libpng_compressed_size_kb ? "oxipng" : "libpng";
   times[
     image_path
   ].conclusion = `${faster_compressor} compresses the file faster by ${Math.round(
